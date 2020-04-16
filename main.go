@@ -25,5 +25,5 @@ func main(){
 	r := routers.SetupRouter()
 
 	//end、启动设置启动端口
-	r.Run(":8081")
+	r.Run(":6666")
 }
