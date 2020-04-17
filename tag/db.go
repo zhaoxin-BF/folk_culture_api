@@ -31,7 +31,7 @@ func DBGetOneTag(tagId int)(userInfo TagsTable, err error)  {
 
 //获取所有分类标签的信息
 func DBGetAllTag()(tagsInfo []TagsTable, err error) {
-	err = db_conn.DB.First(&tagsInfo).Error;
+	err = db_conn.DB.Find(&tagsInfo).Error;
 	if err != nil {
 		return nil, err
 	}

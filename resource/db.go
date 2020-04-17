@@ -25,14 +25,14 @@ type ResourceTable struct {
 	Status               int         //资源状态 0 表示审核通过， 1 表示审核中 2 表示未通过审核
 
 	CreateTime           int         //时间戳
-	SCreateTime          string      //string时间
+	ScreateTime          string      //string时间
 	UpdateTime           int         //时间戳
-	SUpdateTime          string      //string时间
+	SupdateTime          string      //string时间
 
 	ResourceContext      string      //备注信息
 
 	UploadId             int         //user_id
-	Uploaduser           string      //user_name
+	UploadUser           string      //user_name
 
 	CheckId              int         //user_id
 	CheckName            string      //user_name
@@ -61,7 +61,7 @@ func DBGetAllResById(tagId int)(resInfo []ResourceTable, err error) {
 
 //获取所有资源的信息
 func DBGetAllRes()(resInfo []ResourceTable, err error) {
-	err = db_conn.DB.First(&resInfo).Error;
+	err = db_conn.DB.Find(&resInfo).Error;
 	if err != nil {
 		return nil, err
 	}
@@ -81,6 +81,6 @@ func DBCreateRes(resInfo *ResourceTable) (err error){
 }
 //删除一条资源
 func DBDeleteRes(resId int) (err error){
-	err = db_conn.DB.Where("resource = ?",resId).Delete(&ResourceTable{}).Error
+	err = db_conn.DB.Where("resource_id = ?",resId).Delete(&ResourceTable{}).Error
 	return
 }

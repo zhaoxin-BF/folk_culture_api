@@ -7,6 +7,7 @@
 package res
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -23,7 +24,7 @@ func AddRes(c *gin.Context){
 			"DataSet": "form表单提交参数错误！,请输入正确查询参数！",
 		})
 	}
-
+	fmt.Println(form)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "请求成功 success!",
 		"DataSet": AddResLogic(form),

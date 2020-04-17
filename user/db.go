@@ -34,7 +34,7 @@ func DBGetOneUser(account string)(userInfo UsersTable, err error)  {
 
 //获取所有用户的信息
 func DBGetAllUser()(usersInfo []UsersTable, err error) {
-	err = db_conn.DB.First(&usersInfo).Error;
+	err = db_conn.DB.Find(&usersInfo).Error;
 	if err != nil {
 		return nil, err
 	}
