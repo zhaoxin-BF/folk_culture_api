@@ -7,7 +7,7 @@
 package main
 
 import (
-	_ "github.com/go-sql-driver/mysql"       //注意⚠️不含该包会报错 sql: unknown driver "mysql"
+	_ "github.com/go-sql-driver/mysql" //注意⚠️不含该包会报错 sql: unknown driver "mysql"
 	"folk_culture_api/db_conn"
 	"folk_culture_api/log"
 	"folk_culture_api/routers"
@@ -19,11 +19,13 @@ func main(){
 
 
 	//三、启动数据库连接模块
-	db_conn.InitMysql()
+	db_conn.InitMySQL()
 
 	//end、启动设置路由
 	r := routers.SetupRouter()
-
+	//user.InsertUser()
 	//end、启动设置启动端口
-	r.Run(":6666")
+	r.Run(":8088")
+
+	defer db_conn.Close()
 }

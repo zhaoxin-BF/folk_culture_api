@@ -24,7 +24,7 @@ func InitLog(){
 	gin.DisableConsoleColor()
 
 	//写入日志文件
-	f, _ := os.OpenFile("./mikasa_ufs.log", os.O_CREATE|os.O_RDWR|os.O_APPEND, os.ModeAppend)//0644?
+	f, _ := os.OpenFile("./folk_culture.log", os.O_CREATE|os.O_RDWR|os.O_APPEND, os.ModeAppend)//0644?
 	log.SetOutput(f)
 	//gin.DefaultWriter = io.MultiWriter(f)
 
@@ -88,7 +88,7 @@ func LogFile() {
 	//if !util.PathExists(logPath) {
 	//	os.MkdirAll(logPath, os.ModePerm)
 	//}
-	fileName := path.Join(logPath, "mikasa_ufs.log")
+	fileName := path.Join(logPath, "folk_culture.log")
 	//禁止logrus的输出
 	src, err := os.OpenFile(fileName, os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	if err!= nil{
@@ -98,7 +98,7 @@ func LogFile() {
 	logClient.Out = src
 	logClient.SetLevel(log.DebugLevel)
 	logWriter, err := rotatelogs.New(
-		"mikasa_ufs-%Y-%m-%d.log",
+		"folk_culture-%Y-%m-%d:%H:%M.log",
 		rotatelogs.WithLinkName(fileName), // 生成软链，指向最新日志文件
 		rotatelogs.WithMaxAge(7*24*time.Hour), // 文件最大保存时间
 		rotatelogs.WithRotationTime(24*time.Hour), // 日志切割时间间隔
