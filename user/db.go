@@ -6,7 +6,9 @@
 
 package user
 
-import "folk_culture_api/db_conn"
+import (
+	"folk_culture_api/db_conn"
+)
 
 type UsersTable struct {
 	UserId         int
@@ -24,31 +26,34 @@ func (UsersTable) TableName() string {
 }
 
 
-func GetUserInfo()  {
-
+//根据账户获取一个用户的详细信息
+func DBGetOneUser(account string)(userInfo UsersTable, err error)  {
+	err = db_conn.DB.Where("user_account = ?",account).First(&userInfo).Error;
 	return
 }
 
-func GetAllUserInfo() {
+//获取所有用户的信息
+func DBGetAllUser()(usersInfo []UsersTable, err error) {
+	err = db_conn.DB.First(&usersInfo).Error;
+	if err != nil {
+		return nil, err
+	}
 	return
 }
 
-func UpdateUser()  {
-	return
-}
-
-func InsertUser() {
+//更新用户的信息
+func DBUpdateUser(userInfo *UsersTable)(err error){
 	var user UsersTable
-	user.UserAccount  = "1111111"
-	user.UserPassword = "1111111"
-	user.UserName     = "赵亚娟"
-	user.UserTel      = "13888888888"
-	user.UserType     = 1
-	user.UserContext  = ""
-	db_conn.DB.Create(&user)
+	err = db_conn.DB.Model(&user).Where("user_account = ?", userInfo.UserAccount).Updates(&userInfo).Error
 	return
 }
 
-func DeleteUser() {
+func DBCreateUser(userInfo *UsersTable) (err error){
+	err = db_conn.DB.Create(&userInfo).Error
+	return
+}
+
+func DBDeleteUser(account string) (err error){
+	err = db_conn.DB.Where("user_account = ?",account).Delete(&UsersTable{}).Error
 	return
 }

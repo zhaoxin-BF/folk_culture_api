@@ -8,6 +8,9 @@ package routers
 
 import (
 	"folk_culture_api/log"
+	res "folk_culture_api/resource"
+	"folk_culture_api/tag"
+	"folk_culture_api/user"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -21,11 +24,34 @@ func SetupRouter() *gin.Engine{
 	//mikasa_ufs_api路由设置 第一版本v1
 	v1Group := r.Group("v1")
 	{
-		//1、资源查询路由组—search
-		schGroup := v1Group.Group("/search")
+		//1、用户查询路由组—user
+		userGroup := v1Group.Group("/user")
 		{
-			schGroup.GET("/detail",IndexData)              //一：资源详情查询接口
-			schGroup.GET("/capacity",IndexData)              //二：资源容量查询接口
+			userGroup.GET("/getOne",user.GetOneUser)                //获得一个用户
+			userGroup.GET("/getAll",user.GetAllUser)                //获得全部用户
+			userGroup.POST("/register",user.RegisterUser)           //注册一个用户
+			userGroup.GET("/delete",user.DeleteUser)                //删除一个用户
+			userGroup.POST("/update",user.UpdateUser)               //更新一个用户
+		}
+
+		//2、标签查询路由组—tag
+		tagGroup := v1Group.Group("/tag")
+		{
+			tagGroup.GET("/getOne",tag.GetOneTag)                    //获得标签信息
+			tagGroup.GET("/getAll",tag.GetAllTag)                    //获得全部标签
+			tagGroup.POST("/add",tag.AddTag)                         //添加一个标签
+			tagGroup.GET("/delete",tag.DeleteTag)                    //删除一个标签
+			tagGroup.POST("/update",tag.UpdateTag)                   //更新一个标签
+		}
+
+		//3、资源查询路由组—resource
+		resGroup := v1Group.Group("/res")
+		{
+			resGroup.GET("/getOne",res.GetOneRes)                    //获得一条资源
+			resGroup.GET("/getAll",res.GetAllRes)                    //获得全部资源
+			resGroup.POST("/add",res.AddRes)                         //添加一个资源
+			resGroup.GET("/delete",res.DeleteRes)                    //删除一个资源
+			resGroup.POST("/update",res.UpdateRes)                   //更新一个资源
 		}
 	}
 

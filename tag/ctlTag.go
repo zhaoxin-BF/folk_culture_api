@@ -1,10 +1,10 @@
 /**
  * @Author: boreas.zhao email: boreas.zhao@ucloud.cn
- * @Date: 2020/4/17 12:41 上午
+ * @Date: 2020/4/17 12:42 上午
  * @Description:
  */
 
-package res
+package tag
 
 import (
 	"github.com/gin-gonic/gin"
@@ -12,9 +12,9 @@ import (
 	"strconv"
 )
 
-//添加一个资源
-func AddRes(c *gin.Context){
-	var form ResourceTable
+//注册
+func AddTag(c *gin.Context){
+	var form TagsTable
 
 	//post 参数绑定
 	if c.ShouldBind(&form) != nil {
@@ -26,31 +26,30 @@ func AddRes(c *gin.Context){
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "请求成功 success!",
-		"DataSet": AddResLogic(form),
+		"DataSet": AddTagLogic(form),
 	})
 }
 
-//获取一个资源
-func GetOneRes(c *gin.Context){
-	sres_id := c.Query("res_id")
-	resId, _ := strconv.Atoi(sres_id)
+//获取一个用户
+func GetOneTag(c *gin.Context){
+	stagId := c.Query("tag_id")
+	tagId,_ := strconv.Atoi(stagId)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "请求成功 success!",
-		"DataSet":GetOneResLogic(resId),
+		"DataSet":GetOneTagLogic(tagId),
 	})
 }
 
-//获取全部资源
-func GetAllRes(c *gin.Context){
+//获取全部用户
+func GetAllTag(c *gin.Context){
 	c.JSON(http.StatusOK, gin.H{
 		"message": "请求成功 success!",
-		"DataSet": GetAllResLogic(),
+		"DataSet": GetAllTagLogic(),
 	})
 }
 
-//更新一个资源
-func UpdateRes(c *gin.Context){
-	var form ResourceTable
+func UpdateTag(c *gin.Context){
+	var form TagsTable
 
 	//post 参数绑定
 	if c.ShouldBind(&form) != nil {
@@ -62,16 +61,15 @@ func UpdateRes(c *gin.Context){
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "请求成功 success!",
-		"DataSet": UpdateResLogic(form),
+		"DataSet": UpdateTagLogic(form),
 	})
 }
 
-//删除一个资源
-func DeleteRes(c *gin.Context){
-	sres_id := c.Query("res_id")
-	resId, _ := strconv.Atoi(sres_id)
+func DeleteTag(c *gin.Context){
+	stagId := c.Query("tag_id")
+	tagId, _ := strconv.Atoi(stagId)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "请求成功 success!",
-		"DataSet": DeleteResLogic(resId),
+		"DataSet": DeleteTagLogic(tagId),
 	})
 }
