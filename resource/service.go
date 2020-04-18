@@ -20,6 +20,7 @@ func AddResLogic(form ResourceTable) interface{}{
 	return "资源添加成功！"
 }
 
+//根据资源id获取到一条数据
 func GetOneResLogic(resId int) interface{}{
 	resInfo, err := DBGetOneRes(resId)
 	if err != nil {
@@ -29,6 +30,33 @@ func GetOneResLogic(resId int) interface{}{
 	return resInfo
 }
 
+//根据资源名字resName，获取资源信息，模糊查询资源
+func GetResByNameLogic(resName string) interface{} {
+	resInfos, err := DBGetResByName(resName)
+	if err != nil {
+		return "获取资源信息失败！"
+	}
+
+	if len(resInfos) == 0{
+		return "抱歉，没有查到该资源信息！"
+	}
+	return resInfos
+}
+
+//根据tag_id，获取同一类型资源信息
+func GetResByTagIdLogic(tagId int) interface{} {
+	resInfos, err := DBGetAllResById(tagId)
+	if err != nil {
+		return "获取资源信息失败！"
+	}
+
+	if len(resInfos) == 0{
+		return "抱歉，没有查到该tag相关的资源信息！"
+	}
+	return resInfos
+}
+
+//获得所有资源的信息
 func GetAllResLogic() interface{}{
 	resInfos, err := DBGetAllRes();
 	if err != nil {
@@ -36,6 +64,15 @@ func GetAllResLogic() interface{}{
 	}
 	return resInfos
 }
+
+//获得所有资源的信息
+//func GetAllResByTagIdLogic() interface{}{
+//	resInfos, err := DBGetAllRes();
+//	if err != nil {
+//		return "获取所有资源信息失败！"
+//	}
+//	return resInfos
+//}
 
 func UpdateResLogic(form ResourceTable) interface{}{
 	err := DBUpdateRes(&form)

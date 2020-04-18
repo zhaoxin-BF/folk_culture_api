@@ -50,6 +50,15 @@ func DBGetOneRes( resId int)(resInfo ResourceTable, err error)  {
 	return
 }
 
+//根据resourceName获取一个资源的详细信息, 模糊查询
+func DBGetResByName(resName string)(resInfo []ResourceTable, err error)  {
+	err = db_conn.DB.Where("resource_name LIKE ?","%"+resName+"%").Find(&resInfo).Error;
+	if err != nil {
+		return nil, err
+	}
+	return
+}
+
 //根据tagId,获得同一类型资源
 func DBGetAllResById(tagId int)(resInfo []ResourceTable, err error) {
 	err = db_conn.DB.Where("tag_id = ?",tagId).Find(&resInfo).Error;

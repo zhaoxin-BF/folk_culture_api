@@ -31,13 +31,33 @@ func AddRes(c *gin.Context){
 	})
 }
 
-//获取一个资源
+//获取一个资源，根据res_id
 func GetOneRes(c *gin.Context){
 	sres_id := c.Query("res_id")
 	resId, _ := strconv.Atoi(sres_id)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "请求成功 success!",
 		"DataSet":GetOneResLogic(resId),
+	})
+}
+
+//根据resName 模糊查询资源信息
+func GetResByResName(c *gin.Context){
+	resName := c.Query("res_name")
+
+	c.JSON(http.StatusOK, gin.H{
+		"message":"请求成功 success",
+		"DataSet":GetResByNameLogic(resName),
+	})
+}
+
+//根据tagId 获取同一类型的资源信息
+func GetResByTagId(c *gin.Context){
+	stagId := c.Query("tag_id")
+	tagId, _ := strconv.Atoi(stagId)
+	c.JSON(http.StatusOK, gin.H{
+		"message":"请求成功 success",
+		"DataSet":GetResByTagIdLogic(tagId),
 	})
 }
 
