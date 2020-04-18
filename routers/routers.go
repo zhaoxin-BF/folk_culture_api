@@ -27,6 +27,7 @@ func SetupRouter() *gin.Engine{
 		//1、用户查询路由组—user
 		userGroup := v1Group.Group("/user")
 		{
+			userGroup.POST("/login",user.Login)
 			userGroup.GET("/getOne",user.GetOneUser)                //获得一个用户,id
 			userGroup.GET("/getAll",user.GetAllUser)                //获得全部用户
 			userGroup.POST("/register",user.RegisterUser)           //注册一个用户

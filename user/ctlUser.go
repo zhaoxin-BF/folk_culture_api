@@ -29,6 +29,24 @@ func RegisterUser(c *gin.Context){
 	})
 }
 
+//验证登陆一个用户
+func Login(c *gin.Context){
+	var form UserLogin
+
+	//post 参数绑定
+	if c.ShouldBind(&form) != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "请求成功 success!",
+			"DataSet": "form表单提交参数错误！,请输入正确的用户登陆信息！",
+		})
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "请求成功 success!",
+		"DataSet":LoginLogic(form),
+	})
+}
+
 //获取一个用户
 func GetOneUser(c *gin.Context){
 	userAccount := c.Query("account")
