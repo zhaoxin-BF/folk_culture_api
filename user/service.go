@@ -14,18 +14,31 @@ type UserLogin struct {
 	UserPassword   string       //密码
 }
 
+//返回登陆数据model
+type Resp struct {
+	LoginStatus       int           //验证登陆是否成功，0成功  1失败
+	UserInfo          interface{}
+}
+
 //用户登陆验证
 func LoginLogic(form UserLogin) interface{}{
+	var resp Resp
 	//查找数据库，是否有该用户的信息
 	userInfo, err := DBGetOneUser(form.UserAccount)
 
 	if err != nil{
-		return "非法用户，请输入正确的账户与密码！"
+		resp.LoginStatus = 1
+		resp.UserInfo = "非法用户，请输入正确的账户与密码！"
+		return resp
 	}
 	if userInfo.UserAccount == form.UserAccount && (userInfo.UserPassword == form.UserPassword || userInfo.UserTel == form.UserPassword){
-		return userInfo
+		resp.LoginStatus = 0
+		resp.UserInfo = userInfo
+		return resp
 	}
-	return "用户登陆失败, 请检查账户与密码输入是否正确！"
+	resp.LoginStatus = 1
+	resp.UserInfo    = "用户登陆失败, 请检查账户与密码输入是否正确！"
+	return resp
 }
 
 //用户注册
