@@ -51,7 +51,8 @@ func SetupRouter() *gin.Engine{
 			resGroup.GET("/getOne",res.GetOneRes)                    //获得一条资源,id
 			resGroup.GET("/searchRes",res.GetResByResName)           //获得资源模糊查询，resName
 			resGroup.GET("/getTagRes",res.GetResByTagId)             //获取同一类型的资源，tagTd
-			resGroup.GET("/getAll",res.GetAllRes)                    //获得全部资源
+			resGroup.GET("/getAll",res.GetAllRes)                    //获得全部资源, user
+			resGroup.GET("/getMAll",res.MGetAllRes)                  //获得全部资源, manage
 			resGroup.POST("/add",res.AddRes)                         //添加一个资源
 			resGroup.GET("/delete",res.DeleteRes)                    //删除一个资源,id
 			resGroup.POST("/update",res.UpdateRes)                   //更新一个资源,id

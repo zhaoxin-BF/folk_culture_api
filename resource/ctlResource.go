@@ -15,7 +15,7 @@ import (
 
 //添加一个资源
 func AddRes(c *gin.Context){
-	var form ResourceTable
+	var form FormResTable
 
 	//post 参数绑定
 	if c.ShouldBind(&form) != nil {
@@ -61,11 +61,19 @@ func GetResByTagId(c *gin.Context){
 	})
 }
 
-//获取全部资源
+//获取全部资源, user
 func GetAllRes(c *gin.Context){
 	c.JSON(http.StatusOK, gin.H{
 		"message": "请求成功 success!",
 		"DataSet": GetAllResLogic(),
+	})
+}
+
+//获取全部资源, user
+func MGetAllRes(c *gin.Context){
+	c.JSON(http.StatusOK, gin.H{
+		"message": "请求成功 success!",
+		"DataSet": MGetAllResLogic(),
 	})
 }
 

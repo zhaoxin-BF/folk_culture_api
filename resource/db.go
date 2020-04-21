@@ -10,6 +10,7 @@ import (
 	"folk_culture_api/db_conn"
 )
 
+//查库对应model
 type ResourceTable struct {
 	ResourceId           int
 	ResourceName         string
@@ -24,9 +25,9 @@ type ResourceTable struct {
 	Url                  string
 	Status               int         //资源状态 0 表示审核通过， 1 表示审核中 2 表示未通过审核
 
-	CreateTime           int         //时间戳
+	CreateTime           int64       //时间戳
 	ScreateTime          string      //string时间
-	UpdateTime           int         //时间戳
+	UpdateTime           int64       //时间戳
 	SupdateTime          string      //string时间
 
 	ResourceContext      string      //备注信息
@@ -68,8 +69,17 @@ func DBGetAllResById(tagId int)(resInfo []ResourceTable, err error) {
 	return
 }
 
-//获取所有资源的信息
-func DBGetAllRes()(resInfo []ResourceTable, err error) {
+//获取所有资源的信息， user
+func DBGetAllRes(status int)(resInfo []ResourceTable, err error) {
+	err = db_conn.DB.Where("status = ?", status).Find(&resInfo).Error;
+	if err != nil {
+		return nil, err
+	}
+	return
+}
+
+///获取所有资源的信息， Manage
+func DBMGetAllRes()(resInfo []ResourceTable, err error) {
 	err = db_conn.DB.Find(&resInfo).Error;
 	if err != nil {
 		return nil, err

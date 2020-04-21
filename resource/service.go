@@ -6,14 +6,57 @@
 
 package res
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
+//前端添加资源，绑定数据model
+type FormResTable struct {
+	ResourceId           int
+	ResourceName         string
+	TagId                int
+	TagName              string
+	Description          string
+	Author               string
+	Time                 string      //年代
+	Nation               string      //民族
+	Region               string      //地域
+	Url                  string
+	ResourceContext      string      //备注信息
 
-func AddResLogic(form ResourceTable) interface{}{
-	//if form.UserAccount == "" || form.UserPassword == "" || form.UserName == "" || form.UserTel == ""{
-	//	return "必须填写好用户名、账户、密码、电话！"
-	//}
+	UploadId             int         //user_id
+	UploadUser           string      //user_name
+}
 
-	err := DBCreateRes(&form)
+
+func AddResLogic(form FormResTable) interface{}{
+	//创建新的插入资源信息变量
+	var resInfo ResourceTable
+
+	//获取到前端传入的数据
+	resInfo.ResourceName    = form.ResourceName
+	resInfo.TagId           = form.TagId
+	resInfo.TagName         = form.TagName
+	resInfo.Description     = form.Description
+	resInfo.Author          = form.Author
+	resInfo.Time            = form.Time
+	resInfo.Nation          = form.Nation
+	resInfo.Region          = form.Region
+	resInfo.Url             = form.Url
+	resInfo.ResourceContext = form.ResourceContext           //具体内容
+	resInfo.UploadId        = form.UploadId
+	resInfo.UploadUser      = form.UploadUser
+
+	//获得时间信息
+
+
+	//后端添加时间信息，状态信息
+	resInfo.Status          = 1
+	resInfo.CreateTime      = time.Now().Unix()
+	resInfo.ScreateTime     = time.Now().Format("2006-01-02 15:04:05")
+
+
+	err := DBCreateRes(&resInfo)
 	if err != nil {
 		return "资源添加失败！"
 	}
@@ -56,14 +99,30 @@ func GetResByTagIdLogic(tagId int) interface{} {
 	return resInfos
 }
 
-//获得所有资源的信息
+//获得所有通过审核的资源的信息， user
 func GetAllResLogic() interface{}{
-	resInfos, err := DBGetAllRes();
+	status := 0
+	resInfos, err := DBGetAllRes(status);
 	if err != nil {
 		return nil
 	}
 	return resInfos
 }
+
+func MGetAllResLogic() interface{} {
+	allInfos, err := DBMGetAllRes();
+	resInfos := make(map[int][]ResourceTable)
+
+	//分类，通过0，审核中1，没通过2
+	for _, val := range allInfos {
+		resInfos[val.Status] = append(resInfos[val.Status], val)
+	}
+	if err != nil {
+		return nil
+	}
+	return resInfos
+}
+
 
 //获得所有资源的信息
 //func GetAllResByTagIdLogic() interface{}{
