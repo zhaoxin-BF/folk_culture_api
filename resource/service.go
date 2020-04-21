@@ -34,11 +34,11 @@ func GetOneResLogic(resId int) interface{}{
 func GetResByNameLogic(resName string) interface{} {
 	resInfos, err := DBGetResByName(resName)
 	if err != nil {
-		return "获取资源信息失败！"
+		return nil
 	}
 
 	if len(resInfos) == 0{
-		return "抱歉，没有查到该资源信息！"
+		return nil
 	}
 	return resInfos
 }
@@ -47,11 +47,11 @@ func GetResByNameLogic(resName string) interface{} {
 func GetResByTagIdLogic(tagId int) interface{} {
 	resInfos, err := DBGetAllResById(tagId)
 	if err != nil {
-		return "获取资源信息失败！"
+		return nil
 	}
 
 	if len(resInfos) == 0{
-		return "抱歉，没有查到该tag相关的资源信息！"
+		return nil
 	}
 	return resInfos
 }
@@ -60,7 +60,7 @@ func GetResByTagIdLogic(tagId int) interface{} {
 func GetAllResLogic() interface{}{
 	resInfos, err := DBGetAllRes();
 	if err != nil {
-		return "获取所有资源信息失败！"
+		return nil
 	}
 	return resInfos
 }
