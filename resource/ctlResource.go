@@ -20,8 +20,8 @@ func AddRes(c *gin.Context){
 	//post 参数绑定
 	if c.ShouldBind(&form) != nil {
 		c.JSON(http.StatusOK, gin.H{
-			"message": "请求成功 success!",
-			"DataSet": "form表单提交参数错误！,请输入正确查询参数！",
+			"message": "form表单提交参数错误！,请输入正确查询参数！",
+			"DataSet": nil,
 		})
 	}
 	fmt.Println(form)
@@ -34,6 +34,12 @@ func AddRes(c *gin.Context){
 //获取一个资源，根据res_id
 func GetOneRes(c *gin.Context){
 	sres_id := c.Query("res_id")
+	if sres_id == "" {
+		c.JSON(http.StatusOK, gin.H{
+			"message":"查询参数为空，请输入数据！",
+			"DataSet":nil,
+		})
+	}
 	resId, _ := strconv.Atoi(sres_id)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "请求成功 success!",
@@ -44,7 +50,13 @@ func GetOneRes(c *gin.Context){
 //根据resName 模糊查询资源信息
 func GetResByResName(c *gin.Context){
 	resName := c.Query("res_name")
-
+	//判空
+	if resName == "" {
+		c.JSON(http.StatusOK, gin.H{
+			"message":"查询参数为空，请输入数据！",
+			"DataSet":nil,
+		})
+	}
 	c.JSON(http.StatusOK, gin.H{
 		"message":"请求成功 success",
 		"DataSet":GetResByNameLogic(resName),
@@ -54,6 +66,14 @@ func GetResByResName(c *gin.Context){
 //根据tagId 获取同一类型的资源信息
 func GetResByTagId(c *gin.Context){
 	stagId := c.Query("tag_id")
+	//判空
+	if stagId == "" {
+		c.JSON(http.StatusOK, gin.H{
+			"message":"查询参数为空，请输入数据！",
+			"DataSet":nil,
+		})
+	}
+
 	tagId, _ := strconv.Atoi(stagId)
 	c.JSON(http.StatusOK, gin.H{
 		"message":"请求成功 success",
@@ -84,8 +104,8 @@ func UpdateRes(c *gin.Context){
 	//post 参数绑定
 	if c.ShouldBind(&form) != nil {
 		c.JSON(http.StatusOK, gin.H{
-			"message": "请求成功 success!",
-			"DataSet": "form表单提交参数错误！,请输入正确查询参数！",
+			"message": "form表单提交参数错误！,请输入正确查询参数！",
+			"DataSet": nil,
 		})
 	}
 
@@ -98,6 +118,12 @@ func UpdateRes(c *gin.Context){
 //删除一个资源
 func DeleteRes(c *gin.Context){
 	sres_id := c.Query("res_id")
+	if sres_id == "" {
+		c.JSON(http.StatusOK, gin.H{
+			"message":"删除参数为空，请输入数据！",
+			"DataSet":nil,
+		})
+	}
 	resId, _ := strconv.Atoi(sres_id)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "请求成功 success!",

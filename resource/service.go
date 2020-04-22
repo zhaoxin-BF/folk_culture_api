@@ -14,7 +14,6 @@ import (
 type FormResTable struct {
 	ResourceId           int
 	ResourceName         string
-	TagId                int
 	TagName              string
 	Description          string
 	Author               string
@@ -35,7 +34,6 @@ func AddResLogic(form FormResTable) interface{}{
 
 	//获取到前端传入的数据
 	resInfo.ResourceName    = form.ResourceName
-	resInfo.TagId           = form.TagId
 	resInfo.TagName         = form.TagName
 	resInfo.Description     = form.Description
 	resInfo.Author          = form.Author
@@ -51,7 +49,7 @@ func AddResLogic(form FormResTable) interface{}{
 
 
 	//后端添加时间信息，状态信息
-	resInfo.Status          = 1
+	resInfo.Status          = 0
 	resInfo.CreateTime      = time.Now().Unix()
 	resInfo.ScreateTime     = time.Now().Format("2006-01-02 15:04:05")
 

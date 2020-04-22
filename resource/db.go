@@ -8,6 +8,7 @@ package res
 
 import (
 	"folk_culture_api/db_conn"
+	"strconv"
 )
 
 //查库对应model
@@ -53,7 +54,8 @@ func DBGetOneRes( resId int)(resInfo ResourceTable, err error)  {
 
 //根据resourceName获取一个资源的详细信息, 模糊查询
 func DBGetResByName(resName string)(resInfo []ResourceTable, err error)  {
-	err = db_conn.DB.Where("resource_name LIKE ?","%"+resName+"%").Or("tag_name LIKE ?","%"+resName+"%").Find(&resInfo).Error;
+	resId, _ := strconv.Atoi(resName)
+	err = db_conn.DB.Where("resource_name LIKE ?","%"+resName+"%").Or("tag_name LIKE ?","%"+resName+"%").Or("resource_id = ?",resId).Find(&resInfo).Error;
 	if err != nil {
 		return nil, err
 	}
