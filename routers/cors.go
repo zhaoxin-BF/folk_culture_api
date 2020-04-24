@@ -39,7 +39,7 @@ func Cors() gin.HandlerFunc {
 			c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE,UPDATE")
 			//header的类型
 			c.Header("Access-Control-Allow-Headers",
-				"Authorization, Content-Length, X-CSRF-Token, Token," +
+				"Authorization, Content-Length, X-CSRF-Token, Token,user_name," +
 					"session,X_Requested_With,Accept, Origin, Host, Connection," +
 					" Accept-Encoding, Accept-Language,DNT, X-CustomHeader, Keep-Alive," +
 					" User-Agent, X-Requested-With, If-Modified-Since," +

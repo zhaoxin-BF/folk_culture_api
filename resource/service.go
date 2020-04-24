@@ -49,7 +49,7 @@ func AddResLogic(form FormResTable) interface{}{
 
 
 	//后端添加时间信息，状态信息
-	resInfo.Status          = 0
+	resInfo.Status          = 1
 	resInfo.CreateTime      = time.Now().Unix()
 	resInfo.ScreateTime     = time.Now().Format("2006-01-02 15:04:05")
 
@@ -145,4 +145,21 @@ func DeleteResLogic(resId int) interface{}{
 		return "删除资源信息失败！"
 	}
 	return "删除资源信息成功！"
+}
+
+//修改资源状态 0/1/2          3
+func UpdateResStatusLogic(resId ,status int) interface{}{
+
+	if status == 3 {     //删除资源
+		err := DBDeleteRes(resId)
+		if nil != err {
+			return "删除资源信息出错！"
+		}
+	}else {              //修改资源status
+		err := DBUpdateResStatus(resId, status)
+		if err != nil {
+			return "修改资源状态出错！"
+		}
+	}
+	return "修改资源状态成功！"
 }

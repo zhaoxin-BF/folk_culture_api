@@ -83,6 +83,9 @@ func GetResByTagId(c *gin.Context){
 
 //获取全部资源, user
 func GetAllRes(c *gin.Context){
+	cookie,_ := c.Cookie("user");
+	fmt.Println(cookie)
+
 	c.JSON(http.StatusOK, gin.H{
 		"message": "请求成功 success!",
 		"DataSet": GetAllResLogic(),
@@ -128,5 +131,25 @@ func DeleteRes(c *gin.Context){
 	c.JSON(http.StatusOK, gin.H{
 		"message": "请求成功 success!",
 		"DataSet": DeleteResLogic(resId),
+	})
+}
+
+//修改资源状态
+func UpdateResStatus(c *gin.Context){
+	sres_id := c.Query("res_id")
+	sstatus  := c.Query("status")
+	user_name := c.GetHeader("user_name")
+	fmt.Println(user_name)
+	if sres_id == "" || sstatus == "" {
+		c.JSON(http.StatusOK, gin.H{
+			"message":"参数出错，请输入正确的参数！",
+			"DataSet":nil,
+		})
+	}
+	resId, _ := strconv.Atoi(sres_id)
+	status, _ := strconv.Atoi(sstatus)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "请求成功 success!",
+		"DataSet": UpdateResStatusLogic(resId, status),
 	})
 }

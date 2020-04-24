@@ -24,7 +24,7 @@ type ResourceTable struct {
 	Region               string      //地域
 	Copyright            string
 	Url                  string
-	Status               int         //资源状态 0 表示审核通过， 1 表示审核中 2 表示未通过审核
+	Status               int         //资源状态 0 表示审核通过， 1 表示审核中 2 表示未通过审核 3表示标记删除
 
 	CreateTime           int64       //时间戳
 	ScreateTime          string      //string时间
@@ -100,8 +100,19 @@ func DBCreateRes(resInfo *ResourceTable) (err error){
 	err = db_conn.DB.Create(&resInfo).Error
 	return
 }
-//删除一条资源
+
+//更新资源状态信息  status 0/1/2
+func DBUpdateResStatus(resId ,status int) (err error){
+	var res ResourceTable
+	err = db_conn.DB.Model(&res).Where("resource_id = ?", resId).Update("status",status).Error
+	return
+}
+
+//删除一条资源,将状态标记为3    待办
 func DBDeleteRes(resId int) (err error){
 	err = db_conn.DB.Where("resource_id = ?",resId).Delete(&ResourceTable{}).Error
 	return
 }
+
+
+
