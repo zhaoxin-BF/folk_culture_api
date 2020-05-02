@@ -55,7 +55,7 @@ func DBGetOneRes( resId int)(resInfo ResourceTable, err error)  {
 //根据resourceName获取一个资源的详细信息, 模糊查询
 func DBGetResByName(resName string)(resInfo []ResourceTable, err error)  {
 	resId, _ := strconv.Atoi(resName)
-	err = db_conn.DB.Where("resource_name LIKE ?","%"+resName+"%").Or("tag_name LIKE ?","%"+resName+"%").Or("resource_id = ?",resId).Find(&resInfo).Error;
+	err = db_conn.DB.Where("status = ? AND resource_name LIKE ?",0,"%"+resName+"%").Or("status = ? AND tag_name LIKE ?",0,"%"+resName+"%").Or("status = ? AND resource_id = ?",0,resId).Find(&resInfo).Error;
 	if err != nil {
 		return nil, err
 	}
