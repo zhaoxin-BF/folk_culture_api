@@ -1,5 +1,5 @@
-# folk_culture_api
-民俗文化资源管理系统
+# folk_culture_api 民俗文化资源管理系统 后台
+
 
 ## 说明：
 * 采用golang语言，gin web 框架来进行的项目开发
