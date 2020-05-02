@@ -18,6 +18,7 @@ type UsersTable struct {
 	UserTel        string
 	UserType       int
 	UserContext    string
+	CreateTime     int64
 }
 
 // 设置UsersTable 的表名为`users_table`                            //⚠️非常值得注意：数据库表名与model的映射关系
@@ -47,13 +48,19 @@ func DBUpdateUser(userInfo *UsersTable)(err error){
 	err = db_conn.DB.Model(&user).Where("user_account = ?", userInfo.UserAccount).Updates(&userInfo).Error
 	return
 }
+//更新用户类型
+func DBUpdateUserType(userId ,userType int) (err error){
+	var user UsersTable
+	err = db_conn.DB.Model(&user).Where("user_id = ?", userId).Update("user_type",userType).Error
+	return
+}
 
 func DBCreateUser(userInfo *UsersTable) (err error){
 	err = db_conn.DB.Create(&userInfo).Error
 	return
 }
 
-func DBDeleteUser(account string) (err error){
-	err = db_conn.DB.Where("user_account = ?",account).Delete(&UsersTable{}).Error
+func DBDeleteUser(userId int) (err error){
+	err = db_conn.DB.Where("user_id = ?",userId).Delete(&UsersTable{}).Error
 	return
 }

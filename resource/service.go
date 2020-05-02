@@ -50,8 +50,8 @@ func AddResLogic(form FormResTable) interface{}{
 
 	//后端添加时间信息，状态信息
 	resInfo.Status          = 1
-	resInfo.CreateTime      = time.Now().Unix()
-	resInfo.ScreateTime     = time.Now().Format("2006-01-02 15:04:05")
+	resInfo.CreateTime      = time.Now().Unix()                                 //添加时间戳
+	resInfo.ScreateTime     = time.Now().Format("2006-01-02 15:04:05")   //添加创建时间 string
 
 
 	err := DBCreateRes(&resInfo)

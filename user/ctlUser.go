@@ -9,6 +9,7 @@ package user
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
 //注册
@@ -22,7 +23,6 @@ func RegisterUser(c *gin.Context){
 			"DataSet": "form表单提交参数错误！,请输入正确查询参数！",
 		})
 	}
-
 	c.JSON(http.StatusOK, gin.H{
 		"message": "请求成功 success!",
 		"DataSet": RegisterUserLogic(form),
@@ -40,7 +40,6 @@ func Login(c *gin.Context){
 			"DataSet": "form表单提交参数错误！,请输入正确的用户登陆信息！",
 		})
 	}
-
 	c.JSON(http.StatusOK, gin.H{
 		"message": "请求成功 success!",
 		"DataSet":LoginLogic(form),
@@ -80,11 +79,26 @@ func UpdateUser(c *gin.Context){
 		"DataSet": UpdateUserLogic(form),
 	})
 }
+//更新用户类型 0/普通用户 1/管理员 2/超级管理员/ 3封号中
+func UpdateUserType(c *gin.Context){
+	suser_id := c.Query("user_id")
+	stype  := c.Query("type")
 
-func DeleteUser(c *gin.Context){
-	userAccount := c.Query("account")
+	//post 参数绑定
+	userId, _ := strconv.Atoi(suser_id)
+	userType , _ := strconv.Atoi(stype)
+
 	c.JSON(http.StatusOK, gin.H{
 		"message": "请求成功 success!",
-		"DataSet": DeleteUserLogic(userAccount),
+		"DataSet": UpdateUserTypeLogic(userId,userType),
+	})
+}
+
+func DeleteUser(c *gin.Context){
+	suser_id := c.Query("user_id")
+	userId, _ := strconv.Atoi(suser_id)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "请求成功 success!",
+		"DataSet": DeleteUserLogic(userId),
 	})
 }

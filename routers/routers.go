@@ -7,7 +7,6 @@
 package routers
 
 import (
-	"folk_culture_api/auth_demo"
 	"folk_culture_api/log"
 	res "folk_culture_api/resource"
 	"folk_culture_api/tag"
@@ -25,7 +24,6 @@ func SetupRouter() *gin.Engine{
 	//mikasa_ufs_api路由设置 第一版本v1
 	v1Group := r.Group("v1")
 	{
-		v1Group.POST("/addRole", auth_demo.AddRole)
 		//1、用户查询路由组—user
 		userGroup := v1Group.Group("/user")
 		{
@@ -35,6 +33,7 @@ func SetupRouter() *gin.Engine{
 			userGroup.POST("/register",user.RegisterUser)           //注册一个用户
 			userGroup.GET("/delete",user.DeleteUser)                //删除一个用户,id
 			userGroup.POST("/update",user.UpdateUser)               //更新一个用户,id
+			userGroup.GET("/updateUserType",user.UpdateUserType)
 		}
 
 		//2、标签查询路由组—tag

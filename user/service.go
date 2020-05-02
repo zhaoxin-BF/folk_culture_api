@@ -6,12 +6,23 @@
 
 package user
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 //用户登陆model
 type UserLogin struct {
 	UserAccount    string       //账户
 	UserPassword   string       //密码
+}
+
+//用户注册model
+type UserRegister struct {
+	UserName       string
+	UserAccount    string
+	UserPassword   string
+	UserTel        string
 }
 
 //返回登陆数据model
@@ -31,6 +42,14 @@ func LoginLogic(form UserLogin) interface{}{
 		resp.UserInfo = "非法用户，请输入正确的账户与密码！"
 		return resp
 	}
+	//查看是否被封用户  3 为被封用户，不能登陆
+	if userInfo.UserType == 3 {
+		resp.LoginStatus = 1
+		resp.UserInfo = "该用户因非法操作被封号，请联系超级管理员申请解封！"
+		return resp
+	}
+
+	//比对数据，验证登陆
 	if userInfo.UserAccount == form.UserAccount && (userInfo.UserPassword == form.UserPassword || userInfo.UserTel == form.UserPassword){
 		resp.LoginStatus = 0
 		resp.UserInfo = userInfo
@@ -46,7 +65,9 @@ func RegisterUserLogic(form UsersTable) interface{}{
 	if form.UserAccount == "" || form.UserPassword == "" || form.UserName == "" || form.UserTel == ""{
 		return "必须填写好用户名、账户、密码、电话！"
 	}
-
+	form.UserType     = 0
+	form.UserContext  = "普通用户"
+	form.CreateTime   = time.Now().Unix()                                 //添加时间戳
 	err := DBCreateUser(&form)
 	if err != nil {
 		return "用户注册失败，已存在该用户，请重新注册！"
@@ -80,9 +101,25 @@ func UpdateUserLogic(form UsersTable) interface{}{
 	}
 	return "用户信息修改成功！"
 }
+//更新用户类型 0/普通用户 1/管理员 2/超级管理员/ 3封号中 /4删除用户
+func UpdateUserTypeLogic(userId, userType int) interface{}{
+
+	if userType == 4 {     //删除资源
+		err := DBDeleteUser(userId)
+		if nil != err {
+			return "删除用户出错！"
+		}
+	}else {              //修改资源status
+		err := DBUpdateUserType(userId,userType)
+		if err != nil {
+			return "修改用户类型出错！"
+		}
+	}
+	return "修改用户类型成功！"
+}
 //删除一个用户信息
-func DeleteUserLogic(account string) interface{}{
-	err := DBDeleteUser(account)
+func DeleteUserLogic(userId int) interface{}{
+	err := DBDeleteUser(userId)
 	if err != nil{
 		return "删除用户信息失败！"
 	}
