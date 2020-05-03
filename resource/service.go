@@ -148,7 +148,7 @@ func DeleteResLogic(resId int) interface{}{
 }
 
 //修改资源状态 0/1/2          3
-func UpdateResStatusLogic(resId ,status int) interface{}{
+func UpdateResStatusLogic(check_name string,resId ,status int) interface{}{
 
 	if status == 3 {     //删除资源
 		err := DBDeleteRes(resId)
@@ -156,7 +156,7 @@ func UpdateResStatusLogic(resId ,status int) interface{}{
 			return "删除资源信息出错！"
 		}
 	}else {              //修改资源status
-		err := DBUpdateResStatus(resId, status)
+		err := DBUpdateResStatus(check_name,resId, status)
 		if err != nil {
 			return "修改资源状态出错！"
 		}

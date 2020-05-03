@@ -102,9 +102,9 @@ func DBCreateRes(resInfo *ResourceTable) (err error){
 }
 
 //更新资源状态信息  status 0/1/2
-func DBUpdateResStatus(resId ,status int) (err error){
+func DBUpdateResStatus(check_name string,resId ,status int) (err error){
 	var res ResourceTable
-	err = db_conn.DB.Model(&res).Where("resource_id = ?", resId).Update("status",status).Error
+	err = db_conn.DB.Model(&res).Where("resource_id = ?", resId).Updates(map[string]interface{}{"check_name":check_name,"status":status}).Error
 	return
 }
 

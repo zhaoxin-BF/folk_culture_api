@@ -57,7 +57,7 @@ func SetupRouter() *gin.Engine{
 			resGroup.POST("/add",res.AddRes)                         //添加一个资源
 			resGroup.GET("/delete",res.DeleteRes)                    //删除一个资源,id
 			resGroup.POST("/update",res.UpdateRes)                   //更新一个资源,id
-			resGroup.GET("updateStatus",res.UpdateResStatus)         //审核资源， res_id + status
+			resGroup.GET("updateStatus",res.UpdateResStatus)         //审核资源， check_name, res_id + status
 		}
 	}
 
