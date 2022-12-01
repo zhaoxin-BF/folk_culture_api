@@ -19,7 +19,7 @@ func SetupRouter() *gin.Engine{
 	r := gin.Default()
 
 	//设置跨域中间件
-	r.Use(Cors())
+	r.Use(CORS())
 
 	//mikasa_ufs_api路由设置 第一版本v1
 	v1Group := r.Group("v1")
