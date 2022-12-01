@@ -46,7 +46,7 @@ func Cors() gin.HandlerFunc {
 					" Cache-Control, Content-Type, Pragma")
 			//允许跨域设置，可以返回其他子段,跨域关键设置 让浏览器可以解析
 			c.Header("Access-Control-Expose-Headers",
-				"Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers," +
+				"Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, remote_user," +
 					"Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma,FooBar")
 
 			c.Header("Access-Control-Max-Age", "172800")                // 缓存请求信息 单位为秒
