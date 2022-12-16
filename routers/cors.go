@@ -8,11 +8,9 @@ package routers
 
 import (
 	"fmt"
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"
-	"time"
 )
 
 //设置跨域处理函数
@@ -67,13 +65,13 @@ func Cors() gin.HandlerFunc {
 }
 
 // cors middleware
-func CORS() gin.HandlerFunc {
-	config := cors.Config{
-		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"},
-		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "remote_user", "Token"},
-		AllowCredentials: true,
-		AllowOrigins:     []string{"http://localhost:3000"},
-		MaxAge:           12 * time.Hour,
-	}
-	return cors.New(config)
-}
+//func CORS() gin.HandlerFunc {
+//	config := cors.Config{
+//		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"},
+//		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "remote_user", "Token"},
+//		AllowCredentials: true,
+//		AllowOrigins:     []string{"http://localhost:3000"},
+//		MaxAge:           12 * time.Hour,
+//	}
+//	return cors.New(config)
+//}
