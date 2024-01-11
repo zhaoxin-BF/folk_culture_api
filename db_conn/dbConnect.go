@@ -17,7 +17,7 @@ var (
 )
 
 func InitMySQL() (err error) {
-	dsn := "root:Zhaoxin..521@tcp(39.96.179.159:3306)/folk_culture_system?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:Zhaoxin..521@tcp(113.31.115.135:3306)/folk_culture_system?charset=utf8mb4&parseTime=True&loc=Local"
 	DB, err = gorm.Open("mysql", dsn)
 	if err != nil {
 		return
